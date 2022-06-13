@@ -1,29 +1,35 @@
-FROM alpine:3.15
+FROM alpine:latest
 
 ARG BUILD_DATE
 ARG VCS_REF
 
-LABEL org.opencontainers.image.created=$BUILD_DATE \
-    org.opencontainers.image.description="Chrome running in headless mode in a tiny Alpine image" \
-    org.opencontainers.image.title="alpine-chrome" \
-    org.opencontainers.image.documentation="https://github.com/Zenika/alpine-chrome/blob/master/README.md" \
-    org.opencontainers.image.source="https://github.com/Zenika/alpine-chrome" \
-    org.opencontainers.image.revision=$VCS_REF \
-    org.opencontainers.image.vendor="Zenika" \
-    org.opencontainers.image.version="latest"
+LABEL org.label-schema.build-date=$BUILD_DATE \
+    org.label-schema.description="Chrome running in headless mode in a tiny Alpine image" \
+    org.label-schema.name="alpine-chrome" \
+    org.label-schema.schema-version="1.0.0-rc1" \
+    org.label-schema.usage="https://github.com/Zenika/alpine-chrome/blob/master/README.md" \
+    org.label-schema.vcs-url="https://github.com/Zenika/alpine-chrome" \
+    org.label-schema.vcs-ref=$VCS_REF \
+    org.label-schema.vendor="Zenika" \
+    org.label-schema.version="latest"
 
 # Installs latest Chromium package.
-RUN apk upgrade --no-cache --available \
-    && apk add --no-cache \
-      --repository=https://dl-cdn.alpinelinux.org/alpine/edge/main \
-      --repository=https://dl-cdn.alpinelinux.org/alpine/edge/community \
-      chromium \
-    && apk add --no-cache \
-      ttf-freefont \
-      font-noto-emoji \
-    && apk add --no-cache \
-      --repository=https://dl-cdn.alpinelinux.org/alpine/edge/testing \
-      wqy-zenhei
+RUN echo "http://dl-cdn.alpinelinux.org/alpine/edge/main" > /etc/apk/repositories \
+    && echo "http://dl-cdn.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories \
+    && echo "http://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories \
+    && echo "http://dl-cdn.alpinelinux.org/alpine/v3.12/main" >> /etc/apk/repositories \
+    && apk upgrade -U -a \
+    && apk add \
+    libstdc++ \
+    chromium \
+    harfbuzz \
+    nss \
+    freetype \
+    ttf-freefont \
+    font-noto-emoji \
+    wqy-zenhei \
+    && rm -rf /var/cache/* \
+    && mkdir /var/cache/apk
 
 COPY local.conf /etc/fonts/local.conf
 
