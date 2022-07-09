@@ -33,4 +33,4 @@ jobs:
           context: with-puppeteer
           platforms: linux/amd64,linux/arm64
           push: true
-          tags: dockergiantdeck/chrome-puppeteer:latest
+          tags: rollupdev/chrome-puppeteer:latest

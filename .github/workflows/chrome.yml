@@ -33,4 +33,4 @@ jobs:
           context: .
           platforms: linux/amd64,linux/arm64
           push: true
-          tags: dockergiantdeck/chrome:latest
+          tags: rollupdev/chrome:latest

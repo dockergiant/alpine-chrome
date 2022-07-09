@@ -1,4 +1,4 @@
-FROM docker.io/dockergiantdeck/chrome-node
+FROM docker.io/rollupdev/chrome-node
 
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD 1
 ENV PUPPETEER_EXECUTABLE_PATH /usr/bin/chromium-browser

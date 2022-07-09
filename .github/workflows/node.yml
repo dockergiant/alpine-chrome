@@ -33,4 +33,4 @@ jobs:
           context: with-node
           platforms: linux/amd64,linux/arm64
           push: true
-          tags: dockergiantdeck/chrome-node:latest
+          tags: rollupdev/chrome-node:latest
