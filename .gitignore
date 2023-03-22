@@ -1,3 +1,5 @@
 **.pdf
 **.png
 **node_modules**
+.idea
+.DS_Store
