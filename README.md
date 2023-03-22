@@ -89,7 +89,9 @@ Launch the container using:
 
 ## Default entrypoint
 
-The default entrypoint does the following command: `chromium-browser --headless --disable-gpu --disable-software-rasterizer --disable-dev-shm-usage`
+The default entrypoint runs `chromium-browser --headless` with some common flags from `CHROMIUM_FLAGS` set in the [`Dockerfile`](./Dockerfile).
+
+You can change the `CHROMIUM_FLAGS` by overriding the environment variable using: `docker container run -it --rm --env CHROMIUM_FLAGS="--other-flag ..." zenika/alpine-chrome chromium-browser ...`
 
 You can get full control by overriding the entrypoint using: `docker container run -it --rm --entrypoint "" zenika/alpine-chrome chromium-browser ...`
 
@@ -168,7 +170,7 @@ If you have a NodeJS/Puppeteer script in your `src` folder named `pdf.js`, you c
 docker container run -it --rm -v $(pwd)/src:/usr/src/app/src --cap-add=SYS_ADMIN zenika/alpine-chrome:with-puppeteer node src/pdf.js
 ```
 
-With the ["wqy-zenhei"](https://pkgs.alpinelinux.org/package/edge/testing/x86/wqy-zenhei) library, you could also manipulate asian pages like in ["screenshot-asia.js"](https://github.com/Zenika/alpine-chrome/blob/master/with-puppeteer/src/screenshot-asia.js)
+With the ["font-wqy-zenhei"](https://pkgs.alpinelinux.org/package/edge/testing/x86/font-wqy-zenhei) library, you could also manipulate asian pages like in ["screenshot-asia.js"](https://github.com/Zenika/alpine-chrome/blob/master/with-puppeteer/src/screenshot-asia.js)
 
 ```
 docker container run -it --rm -v $(pwd)/src:/usr/src/app/src --cap-add=SYS_ADMIN zenika/alpine-chrome:with-puppeteer node src/screenshot-asia.js
@@ -211,17 +213,9 @@ By default, this image works with WebGL.
 
 If you want to disable it, make sure to add `--disable-gpu` when launching Chromium.
 
-The `with-webgl` tag still exists but is deprecated. It will be removed before end of August 2020.
-
 `docker container run -it --rm --cap-add=SYS_ADMIN -v $(pwd):/usr/src/app zenika/alpine-chrome --screenshot --hide-scrollbars https://webglfundamentals.org/webgl/webgl-fundamentals.html`
 
 `docker container run -it --rm --cap-add=SYS_ADMIN -v $(pwd):/usr/src/app zenika/alpine-chrome --screenshot --hide-scrollbars https://browserleaks.com/webgl`
-
-Links:
-
-- https://github.com/adieuadieu/serverless-chrome/issues/108
-- https://github.com/DevExpress/testcafe/issues/2116
-- 'use-gl' values [here](https://cs.chromium.org/chromium/src/ui/gl/gl_switches.cc?type=cs&q=kUseGL&sq=package:chromium&g=0&l=69)
 
 # How to use with Chromedriver
 
